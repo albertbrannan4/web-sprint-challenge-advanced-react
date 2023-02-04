@@ -88,6 +88,7 @@ export default function AppFunctional(props) {
         email: email,
       });
       setMessage(res.data.message);
+      setEmail(initialEmail);
     } catch (err) {
       setMessage(err.response.data.message);
     }
