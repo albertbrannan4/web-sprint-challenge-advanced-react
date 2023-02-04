@@ -51,16 +51,8 @@ export default class AppClass extends React.Component {
     ) {
       this.setState({ ...this.state, message: "You can't go left" });
     } else {
-      // this.setState({ ...this.state, message: "" });
       this.move(direction);
     }
-
-    //else {
-    //   setMessage(initialMessage);
-    //   move(direction);
-    //   let stepIncrease = steps + 1;
-    //   setSteps(stepIncrease);
-    // }
   };
 
   move = (evt) => {
@@ -119,15 +111,12 @@ export default class AppClass extends React.Component {
     axios
       .post(`http://localhost:9000/api/result`, data)
       .then((res) => {
-        console.log(res);
         this.setState({ ...this.state, message: res.data.message });
       })
       .catch((err) => {
-        console.log(err);
-        this.setState({ ...this.setState, message: err.message });
+        this.setState({ ...this.state, message: err.response.data.message });
       });
   };
-
   render() {
     const { className } = this.props;
     return (
@@ -178,7 +167,6 @@ export default class AppClass extends React.Component {
             type="email"
             placeholder="type email"
             value={this.state.email}
-            required
           ></input>
           <input id="submit" type="submit"></input>
         </form>

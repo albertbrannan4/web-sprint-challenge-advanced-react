@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import * as yup from "yup";
 
-const formSchema = yup.object().shape({
-  email: yup.string().required("Ouch: email is required"),
-});
 // Suggested initial states
 const initialMessage = "";
 const initialEmail = "";
@@ -77,14 +73,13 @@ export default function AppFunctional(props) {
 
   function onChange(evt) {
     // You will need this to update the value of the input.
-    const { name, value } = evt.target;
+    const { value } = evt.target;
     setEmail(value);
   }
 
   async function onSubmit(evt) {
     // Use a POST request to send a payload to the server.
     evt.preventDefault();
-    console.log(email);
     try {
       const res = await axios.post(`http://localhost:9000/api/result`, {
         x: coordinates.x,
@@ -94,8 +89,7 @@ export default function AppFunctional(props) {
       });
       setMessage(res.data.message);
     } catch (err) {
-      console.error(err);
-      setMessage(err.message);
+      setMessage(err.response.data.message);
     }
   }
 
@@ -103,7 +97,7 @@ export default function AppFunctional(props) {
     <div id="wrapper" className={props.className}>
       <div className="info">
         <h3 id="coordinates">
-          Coordinates ({coordinates.x},{coordinates.y})
+          Coordinates ({coordinates.x}, {coordinates.y})
         </h3>
         <h3 id="steps">
           You moved {steps} {steps === 1 ? "time" : "times"}
