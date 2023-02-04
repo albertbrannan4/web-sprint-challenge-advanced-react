@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import * as yup from "yup";
+
+const formSchema = yup.object().shape({
+  email: yup.string().required("Ouch: email is required"),
+});
 // Suggested initial states
 const initialMessage = "";
 const initialEmail = "";
@@ -21,6 +26,7 @@ export default function AppFunctional(props) {
     setMessage(initialMessage);
     setSteps(initialSteps);
     setCoordinates(initialCoordinates);
+    setEmail(initialEmail);
   }
 
   function getNextIndex(direction) {
@@ -71,7 +77,7 @@ export default function AppFunctional(props) {
 
   function onChange(evt) {
     // You will need this to update the value of the input.
-    const { value } = evt.target;
+    const { name, value } = evt.target;
     setEmail(value);
   }
 
@@ -89,6 +95,7 @@ export default function AppFunctional(props) {
       setMessage(res.data.message);
     } catch (err) {
       console.error(err);
+      setMessage(err.message);
     }
   }
 
@@ -98,7 +105,9 @@ export default function AppFunctional(props) {
         <h3 id="coordinates">
           Coordinates ({coordinates.x},{coordinates.y})
         </h3>
-        <h3 id="steps">You moved {steps} times</h3>
+        <h3 id="steps">
+          You moved {steps} {steps === 1 ? "time" : "times"}
+        </h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -135,6 +144,7 @@ export default function AppFunctional(props) {
           onChange={onChange}
           id="email"
           type="email"
+          value={email}
           placeholder="type email"
         ></input>
         <input id="submit" type="submit"></input>

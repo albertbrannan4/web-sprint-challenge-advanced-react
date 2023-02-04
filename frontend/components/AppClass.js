@@ -124,6 +124,7 @@ export default class AppClass extends React.Component {
       })
       .catch((err) => {
         console.log(err);
+        this.setState({ ...this.setState, message: err.message });
       });
   };
 
@@ -135,7 +136,10 @@ export default class AppClass extends React.Component {
           <h3 id="coordinates">
             Coordinates ({this.state.coordinates.x}, {this.state.coordinates.y})
           </h3>
-          <h3 id="steps">You moved {this.state.steps} times</h3>
+          <h3 id="steps">
+            You moved {this.state.steps}{" "}
+            {this.state.steps === 1 ? "time" : "times"}
+          </h3>
         </div>
         <div id="grid">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -173,6 +177,8 @@ export default class AppClass extends React.Component {
             id="email"
             type="email"
             placeholder="type email"
+            value={this.state.email}
+            required
           ></input>
           <input id="submit" type="submit"></input>
         </form>
