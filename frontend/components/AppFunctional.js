@@ -142,7 +142,7 @@ export default function AppFunctional(props) {
           value={email}
           placeholder="type email"
         ></input>
-        <input id="submit" type="submit"></input>
+        <input data-testid="submit-button" id="submit" type="submit"></input>
       </form>
     </div>
   );

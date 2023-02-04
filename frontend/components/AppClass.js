@@ -168,7 +168,7 @@ export default class AppClass extends React.Component {
             placeholder="type email"
             value={this.state.email}
           ></input>
-          <input id="submit" type="submit"></input>
+          <input data-testid="submit-button" id="submit" type="submit"></input>
         </form>
       </div>
     );
